@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/context
+			http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 开启注解扫描 -->
+	<context:component-scan base-package="Department"></context:component-scan>
+	
+	<!-- 若将scope设置为prototyp，则每次从容器中的到的对象都是不一样的 -->
+	<bean id="emp1" class="Emploee.Emploee" scope="prototype">
+		<property name="id" value="01"></property>
+		<property name="name" value="jack"></property>
+		<property name="age" value="23"></property>
+	</bean>
+	<bean id="emp2" class="Emploee.Emploee">
+		<property name="id" value="02"></property>
+		<property name="name" value="Tom"></property>
+		<property name="age" value="25"></property>
+	</bean>
+	
+	<bean id="depart" class="Department.Department">
+		<!-- 数组的注入 -->
+		<property name="strings">
+			<list>
+				<value>sary1</value>
+				<value>sary2</value>
+				<value>sary3</value>
+				<value>sary4</value>
+			</list>
+		</property>
+		<!-- list集合的注入 -->
+		<property name="list">
+			<list>
+				<ref bean="emp1"/>
+				<ref bean="emp1"/>
+			</list>
+		</property>
+		<!-- set集合的注入 -->
+		<property name="set">
+			<set>
+				<ref bean="emp1"/>
+				<ref bean="emp1"/>
+				<ref bean="emp1"/>
+			</set>
+		</property>
+		<!-- map集合的注入 -->
+		<property name="map">
+			<map>
+				<entry key="01" value-ref="emp1"></entry>
+				<entry key="02" value-ref="emp1"></entry>
+				<entry key="03" value-ref="emp1"></entry>
+				<entry key="04" value-ref="emp1"></entry>
+			</map>
+		</property>
+		<!-- 属性成员的注入 -->
+		<property name="properties">
+			<props>
+				<prop key="root">mydata</prop>
+				<prop key="password">1234</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>
